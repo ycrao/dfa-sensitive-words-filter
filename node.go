@@ -1,9 +1,8 @@
 package sensitive_words_filter
 
-
 // DFA node
 type Node struct {
-	End bool
+	End  bool
 	Next map[rune]*Node
 }
 
@@ -39,7 +38,7 @@ func (n *Node) FindChild(c rune) *Node {
 func (n *Node) AddWord(word string) {
 	node := n
 	chars := []rune(word)
-	for index, _ := range chars {
+	for index := range chars {
 		node = node.AddChild(chars[index])
 	}
 	node.End = true

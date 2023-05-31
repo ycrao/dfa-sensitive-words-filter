@@ -5,21 +5,21 @@ import (
 )
 
 const (
-	FilterLevelLow = 1// filter level low
-	FilterLevelMiddle = 2// filter level middle
-	FilterLevelHight = 3// filter level hight
+	FilterLevelLow    = 1 // filter level low
+	FilterLevelMiddle = 2 // filter level middle
+	FilterLevelHight  = 3 // filter level hight
 )
 
 type SensitiveWordsFilter struct {
-	level int
+	level        int
 	skipDistance int
-	replaceText rune
-	root *Node
+	replaceText  rune
+	root         *Node
 }
 
 var (
 	instance *SensitiveWordsFilter
-	once sync.Once
+	once     sync.Once
 )
 
 // Get Instance
@@ -27,7 +27,7 @@ func GetInstance() *SensitiveWordsFilter {
 	once.Do(func() {
 		instance = &SensitiveWordsFilter{
 			root: &Node{
-				End:false,
+				End: false,
 			},
 		}
 	})
@@ -75,7 +75,7 @@ func (filter *SensitiveWordsFilter) Filter(text string) (replaceText string, has
 
 		if j == length && temp != nil && temp.End {
 			end := replaceLength - 1
-			if replaceLength > length - 1 {
+			if replaceLength > length-1 {
 				end = length - 1
 			}
 			replaceRune(textCharsCopy, filter.replaceText, i, end)
@@ -87,12 +87,11 @@ func (filter *SensitiveWordsFilter) Filter(text string) (replaceText string, has
 }
 
 // Replace Rune
-func replaceRune(chars []rune, replaceChar rune, begin int, end int)  {
+func replaceRune(chars []rune, replaceChar rune, begin int, end int) {
 	for i := begin; i <= end; i++ {
 		chars[i] = replaceChar
 	}
 }
-
 
 // Get Filter Max Distance
 func (filter *SensitiveWordsFilter) getMaxDistance(text string) int {
